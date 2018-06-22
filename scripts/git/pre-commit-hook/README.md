@@ -20,3 +20,8 @@ results=`./php-cs-fixer-v2.phar fix $file --dry-run 2>/dev/null | head -n -2`
 
 Now if you commit files that do not comply with php-cs-fixer's rules Phpstorm will display a warning asking you to confirm your commit.
 It will also show you the command to run to fix all the files in one go.
+
+### bash or sh?!
+If you have eagle eyes you've probably noticed the script's extension is `sh` but the actual script uses `bash`. 
+
+The plugin requires the hook file to be exactly `pre-commit-hook.sh` but nothing stops you from changing the shebang to something that better suits you. That's what I did!
