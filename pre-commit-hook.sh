@@ -5,7 +5,7 @@ declare -a FILES
 nbFileFound=0
 for file in $(git ls-files -m | grep .php)
 do
-    results=`docker exec -i DOCKER_CONTAINER ./php-cs-fixer-v2.phar fix $file --dry-run 2>/dev/null | head -n -2`
+    results=`docker exec -i DOCKER_CONTAINER_NAME ./php-cs-fixer-v2.phar fix $file --dry-run 2>/dev/null | head -n -2`
     if [ ! -z "$results" ]; then
         FILES[$nbFileFound]="$file"
         nbFileFound=`expr $nbFileFound + 1`
