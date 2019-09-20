@@ -1,3 +1,8 @@
+# remove large files from git history
+I worked on a repo that was very large due to videos that were added and removed a bit later.
+The problem is that they are still in git's history.
+To remove all references to those objects take a look at this [great gist](https://gist.github.com/mcxiaoke/b4bdad5727c9400bbf7d101f27297e86) which will help you clean up your repo.
+
 # rename-branch.sh
 Simple script to rename branches and push them to remote
 
