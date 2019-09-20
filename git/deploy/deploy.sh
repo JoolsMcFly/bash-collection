@@ -10,6 +10,10 @@ echo ""
 echo "Fetching branches"
 git fetch
 
+echo ""
+echo "Resetting repo"
+git reset --hard HEAD
+
 echo "These branches are available, last updated first."
 branchIndex=0
 branches=$(git branch -avv --format="%(committerdate:iso8601) - %(refname:short)" | grep origin | grep -v master | grep -v HEAD | sort -r | awk '{print $5}')
@@ -41,15 +45,15 @@ do
 done
 
 echo ""
-echo "Where do you want to deploy to? (1=dev (default), 2=preprod, 3=prod)"
+echo "Where do you want to deploy to? (1=dev (default), 2=staging, 3=prod)"
 read target
-destFolder=/app/cockpit_dev
+destFolder=/app/dev
 if [[ ${target} -eq "2" ]]
 then
-    destFolder=/app/website
+    destFolder=/app/staging
 elif [[ ${target} -eq "3" ]]
 then
-    destFolder=/app/cockpit
+    destFolder=/app/prod
 fi
 
 echo ""
@@ -96,6 +100,7 @@ yarn run build
 
 cd ${buildDir}
 rsync --exclude '.git' --exclude 'node_modules' --exclude '.cache' --exclude '.config' --exclude '.docker' --exclude '.npm' --exclude '.yarn' --exclude 'tests' --exclude 'var' --exclude '.env.local' -av ${buildDir}/ ${destFolder}/
+commitId=$(git log --format="%h" -n 1)
 
 cd ${destFolder}
 echo ""
@@ -103,7 +108,6 @@ echo "Running migrations"
 php bin/console doc:mig:mig --no-interaction
 
 date=$(date +"%Y-%m-%d %H:%M:%S")
-commitId=$(git log --format="%h" -n 1)
 echo "<p class=\"version-info\">${checkoutBranch}<br />${date}<br />${commitId}</p>" > ./templates/branch-version.html.twig
 
 echo ""
@@ -112,7 +116,9 @@ rm -rf var/cache/;
 php bin/console cache:clear;
 chmod 777 var/cache/ -R
 chown www-data: var/cache -R
+chown www-data: public/uploads/ -R
 
+cd ${buildDir}
 git checkout master
 echo ""
 echo "Push done"
