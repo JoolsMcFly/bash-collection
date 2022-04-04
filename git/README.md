@@ -31,7 +31,7 @@ results=`./php-cs-fixer-v2.phar fix $file --dry-run 2>/dev/null | head -n -2`
 
 # deploy.sh
 Script I wrote to ease pushing to dev/staging/prod sites of our Symfony application.
-All three versions run on the same server but you can esily adapt the rsync command to push to different servers.
+All three versions run on the same server but you can easily adapt the rsync command to push to different servers.
 Script works as follows:
 - lists available branches, most recently updated first
 - asks where to deploy (dev/staging/prod)
