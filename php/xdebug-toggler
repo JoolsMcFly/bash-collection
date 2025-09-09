@@ -1,0 +1,4 @@
+# easily toggle xdebug on and off with aliases
+
+alias xon='sed -i "s:xdebug.mode=.*:xdebug.mode=develop,debug:g" /etc/php/8.4/cli/conf.d/20-xdebug.ini'
+alias xoff='sed -i "s:xdebug.mode=.*:xdebug.mode=off:g" /etc/php/8.4/cli/conf.d/20-xdebug.ini'
