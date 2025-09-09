@@ -1,0 +1,8 @@
+# /etc/php/8.4/cli/conf.d/20-xdebug.ini
+zend_extension=xdebug.so
+
+[xdebug]
+xdebug.mode=develop,debug
+xdebug.client_host=127.0.0.1           
+xdebug.start_with_request=yes
+xdebug.idekey=PHPSTORM
